@@ -1,7 +1,7 @@
 # Capstone Report — <your lane>
 
 - **Author:** Prathibha Shalini S
-- **Lane:** CTR / Engagement Opportunity Scoring
+- **Lane:** CTR / Engagement Opportunity Scoring for Search Content Review
 - **Repo:** https://github.com/PrathibhaShaliniS/flyrank-internship-ml
 - **Date:** 13 September 2026
 
@@ -125,17 +125,26 @@ far less individually.
 
 ## 7. Recommendation
 
-Scoring every eligible page (26,360 rows) with the trained Random Forest, applying a
-≥50-impression reliability floor (the error analysis showed the model is overconfident below
-that), and thresholding the resulting probabilities produces: 5,528 pages recommended for
-`review_snippet_ctr`, 6,614 for `monitor`, the remainder `no_action`. The top of the list is
-mid-position (`page_3_5`) pages with real impression volume (50+) and literally 0% measured
-CTR — a content editor could reasonably start there tomorrow, since these are the pages most
-likely to have a real, fixable snippet problem rather than statistical noise.
+Scoring all 26,360 eligible rows with the trained Random Forest and applying a ≥50-impression
+reliability floor (4,416 rows excluded as unreliable) leaves 21,944 actionable pages:
 
-**Confidence and limits:** this ranks *relative* underperformance within a page's own tier,
-not an absolute CTR standard, and covers only 3 of 5 position tiers by design (`top_3`/`deep`
-are excluded — see Section 4). A future iteration would need a different approach for those.
+| Action | Pages |
+|---|---|
+| `review_snippet_ctr` | 2,836 |
+| `monitor` | 7,332 |
+| `no_action` | 11,776 |
+Total actionable pages	21,944
+
+The top of the ranked list is consistently `page_3_5`/`striking` pages with real impression
+volume (50–71 impressions) and literally 0% measured CTR at decent-to-average positions
+(avg_position 17.8–48.6) — a content editor could reasonably start there tomorrow, since these
+are the pages most likely to have a real, fixable snippet problem rather than statistical
+noise.
+
+**Confidence and limits:** this ranks *relative* underperformance within a page's own tier, not
+an absolute CTR standard, and covers only `page_1`/`striking`/`page_3_5` by design — `top_3`
+and `deep` (12.1% of all pages) are out of scope, compounded by the label-quality issue in
+`top_3` noted in Section 2.
 
 ## 8. Reproducibility
 
